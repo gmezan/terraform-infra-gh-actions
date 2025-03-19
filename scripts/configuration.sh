@@ -41,18 +41,18 @@ az identity federated-credential create --identity-name $ID_INFRA_NAME \
                                         --resource-group $RG_NAME \
                                         --audiences api://AzureADTokenExchange \
                                         --issuer https://token.actions.githubusercontent.com \
-                                        --subject repo:$OWNER/$REPO:pull_request
+                                        --subject repo:"$OWNER"/"$REPO":pull_request
 
 az identity federated-credential create --identity-name $ID_INFRA_NAME \
                                         --name onBranch \
                                         --resource-group $RG_NAME \
                                         --audiences api://AzureADTokenExchange \
                                         --issuer https://token.actions.githubusercontent.com \
-                                        --subject repo:$OWNER/$REPO:ref:refs/heads/main
+                                        --subject repo:"$OWNER"/"$REPO":ref:refs/heads/main
 
 az identity federated-credential create --identity-name $ID_INFRA_NAME \
                                         --name onEnvironment \
                                         --resource-group $RG_NAME \
                                         --audiences api://AzureADTokenExchange \
                                         --issuer https://token.actions.githubusercontent.com \
-                                        --subject repo:$OWNER/$REPO:environment:azure
+                                        --subject repo:"$OWNER"/"$REPO":environment:azure

@@ -83,4 +83,4 @@
 
 
 
-* Taking inspiration from https://github.com/Azure-Samples/terraform-github-actions/
+Taking inspiration from https://github.com/Azure-Samples/terraform-github-actions/
