@@ -3,10 +3,14 @@ name: 'Terraform Plan/Apply'
 on:
   push:
     branches:
-    - main
+      - main
+    paths:
+      - infra/**
   pull_request:
     branches:
-    - main
+      - main
+    paths:
+      - infra/**
 
 #Special permissions required for OIDC authentication
 permissions:
@@ -19,6 +23,10 @@ env:
   ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
   ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
   ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
+
+defaults:
+  run:
+    working-directory: ./infra
 
 jobs:
   terraform-plan:
@@ -71,8 +79,9 @@ jobs:
     - name: Publish Terraform Plan
       uses: actions/upload-artifact@v4
       with:
+        if-no-files-found: error
         name: tfplan
-        path: tfplan
+        path: infra/tfplan
         
     # Create string output of Terraform Plan
     - name: Create String Output
@@ -119,7 +128,7 @@ jobs:
     name: 'Terraform Apply'
     if: github.ref == 'refs/heads/main' && needs.terraform-plan.outputs.tfplanExitCode == 2
     runs-on: ubuntu-latest
-    environment: production
+    environment: azure
     needs: [terraform-plan]
     
     steps:
@@ -140,6 +149,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: tfplan
+        path: infra/
 
     # Terraform Apply
     - name: Terraform Apply
