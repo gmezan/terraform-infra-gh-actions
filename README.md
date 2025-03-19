@@ -3,18 +3,18 @@
 1. In your Azure Subscription, create a Resource Group
 
     ```sh
-    az group create --name rg-infra-state \
-        --location eastus2
+    az group create --name <Resource-Group-Name> \
+        --location <Region>
     ```
 
 1. Create a storage account in the resource group
 
     ```sh
     az storage account create \
-        --name gmezanterraformghactions \
-        --resource-group rg-infra-state \
-        --location eastus2 \
-        --sku Standard_LRS
+        --name <Storage-Account-Name> \
+        --resource-group <Resource-Group-Name> \
+        --location <Region> \
+        --sku <Sku>
     ```
 
 1. Create a `tfstate` container in the storage account
@@ -22,7 +22,7 @@
     ```sh
     az storage container create \
         --name tfstate \
-        --account-name gmezanterraformghactions \
+        --account-name <Storage-Account-Name> \
         --auth-mode login
     ```
 
@@ -31,26 +31,42 @@
 1. Create Managed Identity to login to Azure from Actions
 
     ```sh
-    az identity create --name id-infra-gh-actions \
-        --resource-group rg-infra-state \
-        --location eastus2
+    az identity create --name <id-gh-actions> \
+        --resource-group <Resource-Group-Name> \
+        --location <Region>
     ```
 
-    ```sh
-    
+1. Assign _Contributor_ Role to the managed identity for the subscription
 
+    ```sh
     az role assignment create --assignee <ManagedIdentityServicePrincipal> \
         --role Contributor \
-        --scope <StorageAccount-Id>
+        --scope <Subscription-Id>
+    ```
 
-    az identity federated-credential create --identity-name id-infra-gh-actions \
+1. Create the following federated credentials
+
+    ```sh
+    az identity federated-credential create --identity-name <id-gh-actions> \
                                         --name onPullRequest \
-                                        --resource-group rg-infra-state \
+                                        --resource-group <Resource-Group-Name> \
                                         --audiences api://AzureADTokenExchange \
                                         --issuer https://token.actions.githubusercontent.com \
-                                        --subject repo:gmezan/azure-infra-deployment:pull_request
+                                        --subject repo:<owner>/<repo>:pull_request
 
+    az identity federated-credential create --identity-name <id-gh-actions> \
+                                        --name onBranch \
+                                        --resource-group <Resource-Group-Name> \
+                                        --audiences api://AzureADTokenExchange \
+                                        --issuer https://token.actions.githubusercontent.com \
+                                        --subject repo:<owner>/<repo>:ref:refs/heads/main
 
+    az identity federated-credential create --identity-name <id-gh-actions> \
+                                        --name onEnvironment \
+                                        --resource-group <Resource-Group-Name> \
+                                        --audiences api://AzureADTokenExchange \
+                                        --issuer https://token.actions.githubusercontent.com \
+                                        --subject repo:<owner>/<repo>:environment:azure
     ```
 
 1. Configure credentials in GH
@@ -66,4 +82,5 @@
 
 
 
-taking inspiration from https://github.com/Azure-Samples/terraform-github-actions/
+
+* Taking inspiration from https://github.com/Azure-Samples/terraform-github-actions/
