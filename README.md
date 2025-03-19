@@ -69,16 +69,12 @@
                                         --subject repo:<owner>/<repo>:environment:azure
     ```
 
-1. Configure credentials in GH
-
-   Go to the correspondent GH repo. In _Settings_ > _Secrets and variables_ > _Actions_, create the following secrets with the values corresponding to the created managed identity.
+1. Configure credentials in GH. Go to the correspondent GH repo. In _Settings_ > _Secrets and variables_ > _Actions_, create the following secrets with the values corresponding to the created managed identity.
    - `AZURE_CLIENT_ID`
    - `AZURE_SUBSCRIPTION_ID`
    - `AZURE_TENANT_ID`
 
-1. Create the environment
-
-   Go to the correspondent repo. In _Settings_ > _Environments_, create the `azure` environment and add the required reviewers.
+1. Go to the correspondent repo. In _Settings_ > _Environments_, create the `azure` environment.
 
 
 
