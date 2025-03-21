@@ -35,7 +35,7 @@ module "aks" {
   depends_on = [module.rg1]
 }
 
-resource "azurerm_role_assignment" "example" {
+resource "azurerm_role_assignment" "aks_to_acr" {
   principal_id                     = module.aks.cluster.kubelet_object_id
   role_definition_name             = "AcrPull"
   scope                            = module.acr.id
