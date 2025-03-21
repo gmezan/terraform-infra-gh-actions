@@ -91,6 +91,7 @@ Taking inspiration from https://github.com/Azure-Samples/terraform-github-action
    - `AWS_SECRET_ACCESS_KEY`
 
 1. Create a PR to `main-aws` and deploy the infra
+![image](https://github.com/user-attachments/assets/22f12b53-f7d4-4dea-9df7-956ee73515a0)
 
 
 Taking inspiration from:
