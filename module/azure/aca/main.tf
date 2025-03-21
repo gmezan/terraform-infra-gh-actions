@@ -9,11 +9,19 @@ resource "azurerm_container_app" "container_app" {
   container_app_environment_id = azurerm_container_app_environment.environment.id
   resource_group_name          = var.rg_name
   revision_mode                = "Single"
+  ingress {
+    external_enabled = var.external_enabled
+    exposed_port = 8080
+    target_port = 80
+    traffic_weight {
+      percentage = 1
+    }
+  }
 
   template {
     container {
-      name   = "examplecontainerapp"
-      image  = "mcr.microsoft.com/k8se/quickstart:latest"
+      name   = "examplecontainerapp2"
+      image  = "nginx"
       cpu    = 0.25
       memory = "0.5Gi"
     }
