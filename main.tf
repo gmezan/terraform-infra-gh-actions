@@ -21,3 +21,25 @@ module "acr" {
 
   depends_on = [module.rg1]
 }
+
+module "aks" {
+  source = "./module/azure/aks"
+
+  rg_name                   = module.rg1.name
+  location                  = var.location
+  rbac_enabled              = true
+  oidc_issuer_enabled       = true
+  workload_identity_enabled = true
+  node_count                = 1
+
+  depends_on = [module.rg1]
+}
+
+resource "azurerm_role_assignment" "example" {
+  principal_id                     = module.aks.cluster.kubelet_object_id
+  role_definition_name             = "AcrPull"
+  scope                            = module.acr.id
+  skip_service_principal_aad_check = true
+
+  depends_on = [module.aks, module.acr]
+}
