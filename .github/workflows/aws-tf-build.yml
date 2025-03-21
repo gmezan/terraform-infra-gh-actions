@@ -25,12 +25,15 @@ jobs:
     name: Terraform Review
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout the repository to the runner
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
       uses: actions/checkout@v4
-    - name: Terraform Setup
+
+    # Install the latest version of the Terraform CLI
+    - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
       with:
-        terraform_version: 1.7.1
+        terraform_wrapper: false
     - name: Terraform Format
       id: fmt
       run: terraform fmt -check -no-color
