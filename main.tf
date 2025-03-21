@@ -9,6 +9,6 @@ module "acr" {
   source = "./module/azure/acr"
 
   name = "a"
-  sku = "Basic"
-  rg = rg1
+  sku  = "Basic"
+  rg   = rg1
 }
