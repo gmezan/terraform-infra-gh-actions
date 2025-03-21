@@ -60,7 +60,7 @@
                                         --resource-group <Resource-Group-Name> \
                                         --audiences api://AzureADTokenExchange \
                                         --issuer https://token.actions.githubusercontent.com \
-                                        --subject repo:<owner>/<repo>:ref:refs/heads/azure-main
+                                        --subject repo:<owner>/<repo>:ref:refs/heads/main-azure
 
     az identity federated-credential create --identity-name <id-gh-actions> \
                                         --name onEnvironment \
