@@ -1,5 +1,5 @@
-variable "rg" {
-  type    = azurerm_resource_group
+variable "rg_name" {
+  type    = string
 }
 
 variable "sku" {
@@ -13,4 +13,9 @@ variable "admin_enabled" {
 
 variable "name" {
   type = string
+}
+
+variable "location" {
+  type    = string
+  default = "eastus2"
 }
