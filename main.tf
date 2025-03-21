@@ -1,4 +1,4 @@
-module "rg" {
+module "rg1" {
   source = "./module/azure/rg"
 
   name     = var.resource_group_name
@@ -10,8 +10,8 @@ module "acr" {
 
   name     = var.acr_name
   sku      = var.acr_sku
-  rg_name  = module.rg.name
+  rg_name  = module.rg1.name
   location = var.location
 
-  depends_on = [module.rg]
+  depends_on = [module.rg1]
 }
