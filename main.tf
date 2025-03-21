@@ -41,5 +41,5 @@ resource "azurerm_role_assignment" "aks_to_acr" {
   scope                            = module.acr.id
   skip_service_principal_aad_check = true
 
-  depends_on = [ module.aks , module.acr]
+  depends_on = [module.aks, module.acr]
 }
