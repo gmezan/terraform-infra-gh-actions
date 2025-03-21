@@ -1,4 +1,4 @@
-module "rg1" {
+module "rg" {
   source = "./module/azure/rg"
 
   name     = var.resource_group_name
