@@ -10,7 +10,7 @@ module "acr" {
 
   name     = var.acr_name
   sku      = var.acr_sku
-  rg_name  = module.rg1.name
+  rg_name  = module.rg.name
   location = var.location
 
   depends_on = [module.rg]
