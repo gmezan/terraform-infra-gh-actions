@@ -158,7 +158,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: tfplan
-        path: infra/tfplan.gpg
+        path: infra/
 
     # Decrypt plan
     - name: Decrypt Terraform Plan
