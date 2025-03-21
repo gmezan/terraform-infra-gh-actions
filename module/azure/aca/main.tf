@@ -10,12 +10,14 @@ resource "azurerm_container_app" "container_app" {
   resource_group_name          = var.rg_name
   revision_mode                = "Single"
 
+
   ingress {
     external_enabled = var.external_enabled
     exposed_port     = 80
     target_port      = 80
     traffic_weight {
-      percentage = 1
+      percentage      = 1
+      latest_revision = true
     }
   }
 
