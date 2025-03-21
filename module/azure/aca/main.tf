@@ -9,10 +9,11 @@ resource "azurerm_container_app" "container_app" {
   container_app_environment_id = azurerm_container_app_environment.environment.id
   resource_group_name          = var.rg_name
   revision_mode                = "Single"
+
   ingress {
     external_enabled = var.external_enabled
-    exposed_port = 8080
-    target_port = 80
+    exposed_port     = 80
+    target_port      = 80
     traffic_weight {
       percentage = 1
     }

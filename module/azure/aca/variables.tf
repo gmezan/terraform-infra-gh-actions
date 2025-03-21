@@ -12,6 +12,6 @@ variable "location" {
 }
 
 variable "external_enabled" {
-  type = bool
+  type    = bool
   default = false
 }
