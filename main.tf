@@ -21,3 +21,16 @@ module "acr" {
 
   depends_on = [module.rg1]
 }
+
+module "aks" {
+  source = "./module/azure/aks"
+
+  rg_name                   = module.rg1.name
+  location                  = var.location
+  rbac_enabled              = true
+  oidc_issuer_enabled       = true
+  workload_identity_enabled = true
+  node_count                = 1
+
+  depends_on = [module.rg1]
+}
