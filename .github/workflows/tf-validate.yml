@@ -5,11 +5,8 @@ on:
     branches:
       - main
     paths:
-      - infra/**
-
-defaults:
-  run:
-    working-directory: ./infra
+      - "**.tf*"
+      - "**/.tf*"
 
 permissions:
   security-events: write # Needed to upload-sarif
