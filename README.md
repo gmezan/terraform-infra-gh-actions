@@ -1,5 +1,6 @@
-# Deploying Infrastructure to Azure with Terraform and GitHub Actions
+# Deploying Infrastructure with Terraform and GitHub Actions
 
+## Azure set up
 1. In your Azure Subscription, create a Resource Group
 
     ```sh
@@ -59,7 +60,7 @@
                                         --resource-group <Resource-Group-Name> \
                                         --audiences api://AzureADTokenExchange \
                                         --issuer https://token.actions.githubusercontent.com \
-                                        --subject repo:<owner>/<repo>:ref:refs/heads/main
+                                        --subject repo:<owner>/<repo>:ref:refs/heads/azure-main
 
     az identity federated-credential create --identity-name <id-gh-actions> \
                                         --name onEnvironment \
@@ -77,5 +78,21 @@
 1. Go to the correspondent repo. In _Settings_ > _Environments_, create the `azure` environment.
 
 
-
 Taking inspiration from https://github.com/Azure-Samples/terraform-github-actions/
+
+
+
+## AWS set up
+
+1. Create an IAM Access Key in the AWS console.
+
+1. Configure credentials in GH. Go to the correspondent GH repo. In _Settings_ > _Secrets and variables_ > _Actions_, create the following secrets with the values corresponding to the created managed identity.
+   - `AWS_ACCESS_KEY_ID`
+   - `AWS_SECRET_ACCESS_KEY`
+
+
+
+
+Taking inspiration from:
+- https://spacelift.io/blog/github-actions-terraform
+- https://aws.amazon.com/blogs/modernizing-with-aws/automate-microsoft-web-application-deployments-with-github-actions-and-terraform/
