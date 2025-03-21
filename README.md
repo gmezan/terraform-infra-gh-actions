@@ -86,11 +86,11 @@ Taking inspiration from https://github.com/Azure-Samples/terraform-github-action
 
 1. Create an IAM Access Key in the AWS console.
 
-1. Configure credentials in GH. Go to the correspondent GH repo. In _Settings_ > _Secrets and variables_ > _Actions_, create the following secrets with the values corresponding to the created managed identity.
+1. Configure credentials in GH. Go to the correspondent GH repo. In _Settings_ > _Secrets and variables_ > _Actions_, create the following secrets with the values corresponding to the created access key.
    - `AWS_ACCESS_KEY_ID`
    - `AWS_SECRET_ACCESS_KEY`
 
-
+1. Create a PR to `main-aws` and deploy the infra
 
 
 Taking inspiration from:
