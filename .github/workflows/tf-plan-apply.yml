@@ -74,6 +74,15 @@ jobs:
         else 
           exit 0
         fi
+    
+    # Encrypt plan
+    # Generate with, for example: dd bs=1 count=64 if=/dev/urandom 2>/dev/null | base64
+    - name: Encrypt Terraform Plan
+      id: tf-plan-encrypt
+      env:
+        ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+      run: |
+        gpg --batch "--passphrase=$ENCRYPTION_KEY" --symmetric --cipher-algo AES256 --digest-algo sha256 --s2k-mode 3 --s2k-digest-algo sha256 --s2k-count 65011712 tfplan
         
     # Save plan to artifacts  
     - name: Publish Terraform Plan
@@ -81,7 +90,7 @@ jobs:
       with:
         if-no-files-found: error
         name: tfplan
-        path: infra/tfplan
+        path: infra/tfplan.gpg
         
     # Create string output of Terraform Plan
     - name: Create String Output
@@ -149,7 +158,15 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: tfplan
-        path: infra/
+        path: infra/tfplan.gpg
+
+    # Decrypt plan
+    - name: Decrypt Terraform Plan
+      id: tf-plan-decrypt
+      env:
+        ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+      run: |
+        gpg --batch "--passphrase=$ENCRYPTION_KEY" -o tfplan --decrypt tfplan.gpg
 
     # Terraform Apply
     - name: Terraform Apply
