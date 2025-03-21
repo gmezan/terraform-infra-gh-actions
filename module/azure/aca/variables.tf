@@ -10,8 +10,3 @@ variable "location" {
   type    = string
   default = "eastus2"
 }
-
-variable "external_enabled" {
-  type    = bool
-  default = false
-}

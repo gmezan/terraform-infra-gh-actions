@@ -10,21 +10,10 @@ resource "azurerm_container_app" "container_app" {
   resource_group_name          = var.rg_name
   revision_mode                = "Single"
 
-
-  ingress {
-    external_enabled = var.external_enabled
-    exposed_port     = 80
-    target_port      = 80
-    traffic_weight {
-      percentage      = 1
-      latest_revision = true
-    }
-  }
-
   template {
     container {
-      name   = "examplecontainerapp2"
-      image  = "nginx"
+      name   = "examplecontainerapp"
+      image  = "mcr.microsoft.com/k8se/quickstart:latest"
       cpu    = 0.25
       memory = "0.5Gi"
     }
