@@ -8,8 +8,10 @@ module "rg1" {
 module "acr" {
   source = "./module/azure/acr"
 
-  name     = "gmezanregistry001"
-  sku      = "Basic"
-  rg_name  = rg1.name
+  name     = var.acr_name
+  sku      = var.acr_sku
+  rg_name  = module.rg1.name
   location = var.location
+
+  depends_on = [module.rg]
 }
