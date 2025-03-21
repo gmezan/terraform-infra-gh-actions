@@ -8,7 +8,7 @@ module "rg1" {
 module "acr" {
   source = "./module/azure/acr"
 
-  name = "a"
+  name = "gmezanregistry001"
   sku  = "Basic"
   rg   = rg1
 }
