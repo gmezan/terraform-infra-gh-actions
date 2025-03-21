@@ -21,10 +21,10 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 jobs:
- terraform:
-   name: "Terraform Infrastructure Change Management"
-   runs-on: ubuntu-latest
-   steps:
+  terraform-review:
+    name: Terraform Review
+    runs-on: ubuntu-latest
+    steps:
     - name: Checkout the repository to the runner
       uses: actions/checkout@v4
     - name: Terraform Setup
@@ -59,6 +59,23 @@ jobs:
         else 
           exit 0
         fi
+
+    # Encrypt plan
+    # Generate with, for example: dd bs=1 count=64 if=/dev/urandom 2>/dev/null | base64
+    - name: Encrypt Terraform Plan
+      id: tf-plan-encrypt
+      env:
+        ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+      run: |
+        gpg --batch "--passphrase=$ENCRYPTION_KEY" --symmetric --cipher-algo AES256 --digest-algo sha256 --s2k-mode 3 --s2k-digest-algo sha256 --s2k-count 65011712 tfplan
+        
+    # Save plan to artifacts  
+    - name: Publish Terraform Plan
+      uses: actions/upload-artifact@v4
+      with:
+        if-no-files-found: error
+        name: tfplan
+        path: tfplan.gpg
 
     # Create string output of Terraform Plan
     - name: Create String Output
@@ -100,3 +117,36 @@ jobs:
                 repo: context.repo.repo,
                 body: body
             })
+    
+  terraform-deploy:
+    name: 'Terraform Deploy'
+    #if: github.ref == 'refs/heads/aws-main' && needs.terraform-plan.outputs.tfplanExitCode == 2
+    runs-on: ubuntu-latest
+    environment: aws
+    needs: [terraform-review]
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Terraform Init
+      run: terraform init
+
+    # Download saved plan from artifacts  
+    - name: Download Terraform Plan
+      uses: actions/download-artifact@v4
+      with:
+        name: tfplan
+
+    # Decrypt plan
+    - name: Decrypt Terraform Plan
+      id: tf-plan-decrypt
+      env:
+        ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+      run: |
+        gpg --batch "--passphrase=$ENCRYPTION_KEY" -o tfplan --decrypt tfplan.gpg
