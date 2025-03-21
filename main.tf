@@ -24,9 +24,10 @@ module "acr" {
 module "aca" {
   source = "./module/azure/aca"
 
-  name     = "gmezanappcontainerzzz"
-  rg_name  = module.rg1.name
-  location = var.location
+  name             = "gmezanappcontainerzzz"
+  rg_name          = module.rg1.name
+  location         = var.location
+  external_enabled = true
 
   depends_on = [module.rg1]
 }
