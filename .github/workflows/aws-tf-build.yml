@@ -150,3 +150,7 @@ jobs:
         ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
       run: |
         gpg --batch "--passphrase=$ENCRYPTION_KEY" -o tfplan --decrypt tfplan.gpg
+
+    # Terraform Apply
+    - name: Terraform Apply
+      run: terraform apply -auto-approve tfplan

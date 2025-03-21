@@ -3,6 +3,8 @@ name: 'Terraform Validate'
 on:
   pull_request:
     branches:
+      - azure-main
+      - aws-main
       - main
     paths:
       - "**.tf*"
