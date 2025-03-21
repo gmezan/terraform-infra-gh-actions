@@ -9,8 +9,8 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - infra/**
+    #paths:
+    #  - infra/**
 
 #Special permissions required for OIDC authentication
 permissions:
