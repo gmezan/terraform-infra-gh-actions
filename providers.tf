@@ -26,4 +26,5 @@ terraform {
     bucket = "gmezan-terraform-infra-gh-actions"
     key    = "terraform.tfstate"
     region = "us-east-2"
+  }
 }
