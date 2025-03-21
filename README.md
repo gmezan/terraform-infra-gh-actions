@@ -1,4 +1,4 @@
-# Deploying Infra to Azure with Terraform and GitHub Actions
+# Deploying Infrastructure to Azure with Terraform and GitHub Actions
 
 1. In your Azure Subscription, create a Resource Group
 

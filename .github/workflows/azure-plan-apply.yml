@@ -1,4 +1,4 @@
-name: 'Terraform Plan/Apply'
+name: 'Azure Terraform Plan/Apply'
 
 on:
   push:
