@@ -1,13 +1,15 @@
 RG_NAME=rg-infra-state
 AZ_REGION=eastus2
+OWNER=gmezan
+REPO=azure-infra-deployment
+AZ_STAC_NAME=gmezanterraformghactions
+ID_INFRA_NAME=id-infra-gh-actions
 
 # 1
 az group create --name $RG_NAME \
         --location $AZ_REGION
 
 # 2
-AZ_STAC_NAME=gmezanterraformghactions
-
 az storage account create \
         --name $AZ_STAC_NAME \
         --resource-group $RG_NAME \
@@ -21,7 +23,6 @@ az storage container create \
         --auth-mode login
 
 # 4
-ID_INFRA_NAME=id-infra-gh-actions
 az identity create --name $ID_INFRA_NAME \
         --resource-group $RG_NAME \
         --location $AZ_REGION
@@ -34,8 +35,6 @@ az role assignment create --assignee $ID_INFRA_SP \
         --scope $SUBS_ID
 
 # 6
-OWNER=gmezan
-REPO=azure-infra-deployment
 az identity federated-credential create --identity-name $ID_INFRA_NAME \
                                         --name onPullRequest \
                                         --resource-group $RG_NAME \
