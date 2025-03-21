@@ -1,5 +1,5 @@
 variable "rg_name" {
-  type    = string
+  type = string
 }
 
 variable "sku" {
@@ -7,7 +7,7 @@ variable "sku" {
 }
 
 variable "admin_enabled" {
-  type = bool
+  type    = bool
   default = false
 }
 
