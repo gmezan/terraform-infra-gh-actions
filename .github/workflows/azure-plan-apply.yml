@@ -19,6 +19,8 @@ env:
   ARM_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
   ARM_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
   ARM_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
+  AZ_TF_RG: "${{ secrets.AZ_TF_RG }}"
+  AZ_TF_SA: "${{ secrets.AZ_TF_SA }}"
 
 
 jobs:
@@ -44,7 +46,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init -backend-config="resource_group_name=${{ secrets.AZ_RG }}" -backend-config="storage_account_name=${{ secrets.AZ_SA }}"
+      run: terraform init -backend-config="resource_group_name=$AZ_TF_RG" -backend-config="storage_account_name=$AZ_TF_SA"
 
     # Checks that all Terraform configuration files adhere to a canonical format
     # Will fail the build if not

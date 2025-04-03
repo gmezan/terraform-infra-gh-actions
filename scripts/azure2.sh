@@ -2,7 +2,7 @@
 ID_INFRA_SP=""
 SUBS_ID=""
 az role assignment create --assignee $ID_INFRA_SP \
-        --role Contributor \
+        --role Owner \
         --scope $SUBS_ID
 
 # 6
