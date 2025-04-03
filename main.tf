@@ -12,7 +12,7 @@ module "resource_group" {
 module "azure_cognitive_account" {
   source = "./module/azure/aoai"
 
-  name     = "azurecognitive01"
+  name     = "azurecognitivegmezan01"
   rg_name  = module.resource_group.name
   location = var.location
 
