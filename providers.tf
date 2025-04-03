@@ -21,6 +21,6 @@ terraform {
 }
 
 provider "azurerm" {
-  resource_provider_registrations = "all"
-  use_oidc                        = true
+  features {}
+  use_oidc = true
 }
