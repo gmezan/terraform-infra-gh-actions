@@ -4,7 +4,7 @@ resource "azurerm_cognitive_deployment" "aoai_deployment" {
 
   model {
     format  = var.format
-    name    = var.deployment_name
+    name    = var.model_name
     version = var.model_version
   }
 

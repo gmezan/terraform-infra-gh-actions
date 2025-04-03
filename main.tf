@@ -1,5 +1,5 @@
 resource "random_pet" "rg_name" {
-  prefix = var.resource_group_name_prefix
+  prefix = "rg"
 }
 
 module "resource_group" {
@@ -9,10 +9,15 @@ module "resource_group" {
   location = var.location
 }
 
+resource "random_pet" "aoai" {
+  prefix = "gmcoac"
+  separator = ""
+}
+
 module "azure_cognitive_account" {
   source = "./module/azure/aoai"
 
-  name     = "azurecognitivegmezan01"
+  name     = random_pet.aoai.id
   rg_name  = module.resource_group.name
   location = var.location
 
@@ -23,7 +28,7 @@ module "azure_openai_deployment" {
   source               = "./module/azure/aoai_deployment"
   cognitive_account_id = module.azure_cognitive_account.id
 
-  name     = "gmezanopenai02"
+  name     = "gpt-4o-mini"
   rg_name  = module.resource_group.name
   capacity = 8
 
