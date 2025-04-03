@@ -10,7 +10,7 @@ module "resource_group" {
 }
 
 resource "random_pet" "aoai" {
-  prefix = "gmcoac"
+  prefix    = "gmcoac"
   separator = ""
 }
 
@@ -25,12 +25,28 @@ module "azure_cognitive_account" {
 }
 
 module "azure_openai_deployment" {
-  source               = "./module/azure/aoai_deployment"
-  cognitive_account_id = module.azure_cognitive_account.id
+  source = "./module/azure/aoai_deployment"
 
-  name     = "gpt-4o-mini"
-  rg_name  = module.resource_group.name
-  capacity = 8
+  cognitive_account_id = module.azure_cognitive_account.id
+  name                 = "gpt-4o-mini"
+  model_name           = "gpt-4o-mini"
+  rg_name              = module.resource_group.name
+  capacity             = 8
 
   depends_on = [module.resource_group, module.azure_cognitive_account]
+}
+
+resource "random_pet" "search" {
+  prefix    = "gmaise"
+  separator = ""
+}
+
+module "azurerm_search_service" {
+  source = "./module/azure/search"
+
+  name     = random_pet.search.id
+  rg_name  = module.resource_group.name
+  location = var.location
+
+  depends_on = [module.resource_group]
 }

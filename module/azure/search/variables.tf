@@ -4,7 +4,7 @@ variable "rg_name" {
 
 variable "sku" {
   type    = string
-  default = "S0"
+  default = "Free"
 }
 
 variable "name" {
@@ -14,9 +14,4 @@ variable "name" {
 variable "location" {
   type    = string
   default = "eastus2"
-}
-
-variable "kind" {
-  type    = string
-  default = "OpenAI"
 }
