@@ -30,7 +30,12 @@ variable "sku_name" {
   default = "Standard"
 }
 
-variable "sku_tier" {
+variable "capacity" {
   type    = string
-  default = "Free"
+  default = "1"
+}
+
+variable "policy_name" {
+  type    = string
+  default = "Microsoft.DefaultV2"
 }
