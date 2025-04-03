@@ -141,7 +141,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -backend-config="resource_group_name=$AZ_TF_RG" -backend-config="storage_account_name=$AZ_TF_SA"
 
     # Download saved plan from artifacts  
     - name: Download Terraform Plan
@@ -158,5 +158,5 @@ jobs:
         gpg --batch "--passphrase=$ENCRYPTION_KEY" -o tfplan --decrypt tfplan.gpg
 
     # Terraform Apply
-    - name: Terraform Destroy
-      run: terraform destroy -auto-approve tfplan
+    - name: Terraform Apply Destroy
+      run: terraform apply -auto-approve tfplan

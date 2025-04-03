@@ -9,7 +9,9 @@ resource "azurerm_cognitive_deployment" "aoai_deployment" {
   }
 
   sku {
-    name = var.sku_name
-    tier = var.sku_tier
+    name     = var.sku_name
+    capacity = var.capacity
   }
+
+  rai_policy_name = var.policy_name
 }

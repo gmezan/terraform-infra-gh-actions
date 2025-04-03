@@ -12,7 +12,7 @@ module "resource_group" {
 module "azure_cognitive_account" {
   source = "./module/azure/aoai"
 
-  name     = "azurecognitive01"
+  name     = "azurecognitivegmezan01"
   rg_name  = module.resource_group.name
   location = var.location
 
@@ -23,8 +23,9 @@ module "azure_openai_deployment" {
   source               = "./module/azure/aoai_deployment"
   cognitive_account_id = module.azure_cognitive_account.id
 
-  name    = "gmezanopenai01"
-  rg_name = module.resource_group.name
+  name     = "gmezanopenai02"
+  rg_name  = module.resource_group.name
+  capacity = 8
 
   depends_on = [module.resource_group, module.azure_cognitive_account]
 }
