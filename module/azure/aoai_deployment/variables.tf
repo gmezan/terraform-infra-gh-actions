@@ -6,9 +6,8 @@ variable "name" {
   type = string
 }
 
-variable "location" {
-  type    = string
-  default = "eastus2"
+variable "cognitive_account_id" {
+  type = string
 }
 
 variable "format" {

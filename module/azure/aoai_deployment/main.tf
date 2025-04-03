@@ -1,6 +1,6 @@
 resource "azurerm_cognitive_deployment" "aoai_deployment" {
   name                 = var.name
-  cognitive_account_id = var.location
+  cognitive_account_id = var.cognitive_account_id
 
   model {
     format  = var.format
