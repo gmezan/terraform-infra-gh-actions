@@ -15,7 +15,7 @@ variable "format" {
   default = "OpenAI"
 }
 
-variable "deployment_name" {
+variable "model_name" {
   type    = string
   default = "gpt-4o-mini"
 }
