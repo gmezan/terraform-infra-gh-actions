@@ -21,7 +21,7 @@ variable "deployment_name" {
   default = "gpt-4o-mini"
 }
 
-variable "version" {
+variable "model_version" {
   type    = string
   default = "2024-07-18"
 }
