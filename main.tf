@@ -25,7 +25,7 @@ module "azure_openai_deployment" {
 
   name     = "gmezanopenai02"
   rg_name  = module.resource_group.name
-  capacity = 1000
+  capacity = 8
 
   depends_on = [module.resource_group, module.azure_cognitive_account]
 }
