@@ -42,7 +42,7 @@ module "azure_openai_deployment_embedding" {
   cognitive_account_id = module.azure_cognitive_account.id
   name                 = "text-embedding-3-small"
   model_name           = "text-embedding-3-small"
-  model_version = ""
+  model_version        = ""
   rg_name              = module.resource_group.name
   capacity             = 8
 
@@ -60,7 +60,7 @@ module "azurerm_search_service" {
   name     = random_pet.search.id
   rg_name  = module.resource_group.name
   location = var.location
-  sku = "free"
+  sku      = "free"
 
   depends_on = [module.resource_group]
 }
