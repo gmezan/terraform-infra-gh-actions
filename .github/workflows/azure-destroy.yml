@@ -158,5 +158,5 @@ jobs:
         gpg --batch "--passphrase=$ENCRYPTION_KEY" -o tfplan --decrypt tfplan.gpg
 
     # Terraform Apply
-    - name: Terraform Destroy
-      run: terraform destroy -auto-approve tfplan
+    - name: Terraform Apply Destroy
+      run: terraform apply -auto-approve tfplan
