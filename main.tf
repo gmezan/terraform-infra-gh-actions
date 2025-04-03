@@ -78,3 +78,25 @@ module "azure_ai_multi_service" {
   location = var.location
   kind     = "CognitiveServices"
 }
+
+resource "random_pet" "stac" {
+  prefix    = "gmstac"
+  separator = ""
+}
+
+module "azure_storage_account" {
+  source = "./module/azure/stac"
+
+  name     = random_pet.stac.id
+  rg_name  = module.resource_group.name
+  location = var.location
+
+  depends_on = [module.resource_group]
+}
+
+module "stac_container_rag" {
+  source = "./module/azure/stac/container"
+
+  name               = "rag"
+  storage_account_id = module.azure_storage_account.id
+}
