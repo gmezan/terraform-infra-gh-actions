@@ -12,16 +12,16 @@ module "resource_group" {
 module "azure_congnitive_account" {
   source = "./module/azure/aoai"
 
-  name = "azurecognitive01"
-  rg_name = module.resource_group.name
+  name     = "azurecognitive01"
+  rg_name  = module.resource_group.name
   location = var.location
 
-  depends_on = [ module.resource_group ]
+  depends_on = [module.resource_group]
 }
 
 module "azure_openai_deployment" {
   source = "./module/azure/aoai_deployment"
 
-  name = "gmezanopenai01"
+  name    = "gmezanopenai01"
   rg_name = module.resource_group.name
 }

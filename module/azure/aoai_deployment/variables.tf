@@ -22,7 +22,7 @@ variable "deployment_name" {
 }
 
 variable "version" {
-  type = string
+  type    = string
   default = "2024-07-18"
 }
 
