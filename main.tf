@@ -24,12 +24,25 @@ module "azure_cognitive_account" {
   depends_on = [module.resource_group]
 }
 
-module "azure_openai_deployment" {
+module "azure_openai_deployment_gpt" {
   source = "./module/azure/aoai_deployment"
 
   cognitive_account_id = module.azure_cognitive_account.id
   name                 = "gpt-4o-mini"
   model_name           = "gpt-4o-mini"
+  rg_name              = module.resource_group.name
+  capacity             = 8
+
+  depends_on = [module.resource_group, module.azure_cognitive_account]
+}
+
+module "azure_openai_deployment_embedding" {
+  source = "./module/azure/aoai_deployment"
+
+  cognitive_account_id = module.azure_cognitive_account.id
+  name                 = "text-embedding-3-small"
+  model_name           = "text-embedding-3-small"
+  model_version = ""
   rg_name              = module.resource_group.name
   capacity             = 8
 
