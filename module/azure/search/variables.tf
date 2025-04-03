@@ -4,7 +4,7 @@ variable "rg_name" {
 
 variable "sku" {
   type    = string
-  default = "Free"
+  default = "free"
 }
 
 variable "name" {

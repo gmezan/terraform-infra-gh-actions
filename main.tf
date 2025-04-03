@@ -47,6 +47,7 @@ module "azurerm_search_service" {
   name     = random_pet.search.id
   rg_name  = module.resource_group.name
   location = var.location
+  sku = "free"
 
   depends_on = [module.resource_group]
 }
