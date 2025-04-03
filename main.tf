@@ -15,7 +15,7 @@ resource "random_pet" "aoai" {
 }
 
 module "azure_cognitive_account" {
-  source = "./module/azure/aoai"
+  source = "./module/azure/ai"
 
   name     = random_pet.aoai.id
   rg_name  = module.resource_group.name
@@ -31,7 +31,7 @@ module "azure_openai_deployment_gpt" {
   name                 = "gpt-4o-mini"
   model_name           = "gpt-4o-mini"
   rg_name              = module.resource_group.name
-  capacity             = 8
+  capacity             = 4
 
   depends_on = [module.resource_group, module.azure_cognitive_account]
 }
@@ -44,7 +44,7 @@ module "azure_openai_deployment_embedding" {
   model_name           = "text-embedding-3-small"
   model_version        = ""
   rg_name              = module.resource_group.name
-  capacity             = 8
+  capacity             = 20
 
   depends_on = [module.resource_group, module.azure_cognitive_account]
 }
@@ -63,4 +63,18 @@ module "azurerm_search_service" {
   sku      = "free"
 
   depends_on = [module.resource_group]
+}
+
+resource "random_pet" "aims" {
+  prefix    = "gmaims"
+  separator = ""
+}
+
+module "azure_ai_multi_service" {
+  source = "./module/azure/ai"
+
+  name     = random_pet.aims.id
+  rg_name  = module.resource_group.name
+  location = var.location
+  kind     = "CognitiveServices"
 }
