@@ -10,7 +10,7 @@ module "resource_group" {
 }
 
 resource "random_pet" "aoai" {
-  prefix    = "gmcoac"
+  prefix    = "aoaigm"
   separator = ""
 }
 
@@ -50,7 +50,7 @@ module "azure_openai_deployment_embedding" {
 }
 
 resource "random_pet" "search" {
-  prefix    = "gmaise"
+  prefix    = "seargm"
   separator = ""
 }
 
@@ -65,24 +65,8 @@ module "azurerm_search_service" {
   depends_on = [module.resource_group]
 }
 
-resource "random_pet" "search2" {
-  prefix    = "gmaise"
-  separator = ""
-}
-
-module "azurerm_search_service_2" {
-  source = "./module/azure/search"
-
-  name     = random_pet.search2.id
-  rg_name  = module.resource_group.name
-  location = var.location
-  sku      = "basic"
-
-  depends_on = [module.resource_group]
-}
-
 resource "random_pet" "aims" {
-  prefix    = "gmaims"
+  prefix    = "aimsgm"
   separator = ""
 }
 
@@ -96,7 +80,7 @@ module "azure_ai_multi_service" {
 }
 
 resource "random_pet" "stac" {
-  prefix    = "gmstac"
+  prefix    = "stacgm"
   separator = ""
 }
 
@@ -115,4 +99,24 @@ module "stac_container_rag" {
 
   name               = "rag"
   storage_account_id = module.azure_storage_account.id
+}
+
+module "search_storage_reader" {
+  source = "./module/azure/role_assignment"
+
+  scope_id     = module.azure_storage_account.id
+  principal_id = module.azurerm_search_service.identity.principal_id
+  role_name    = "Storage Blob Data Reader"
+
+  depends_on = [module.azure_storage_account, module.azurerm_search_service]
+}
+
+module "search_openai_user" {
+  source = "./module/azure/role_assignment"
+
+  scope_id     = module.azure_cognitive_account.id
+  principal_id = module.azurerm_search_service.identity.principal_id
+  role_name    = "Cognitive Services OpenAI User"
+
+  depends_on = [module.azure_cognitive_account, module.azurerm_search_service]
 }
