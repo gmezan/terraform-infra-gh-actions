@@ -31,7 +31,7 @@ module "azure_openai_deployment_gpt" {
   name                 = "gpt-4o-mini"
   model_name           = "gpt-4o-mini"
   rg_name              = module.resource_group.name
-  capacity             = 4
+  capacity             = 2
 
   depends_on = [module.resource_group, module.azure_cognitive_account]
 }
