@@ -65,6 +65,22 @@ module "azurerm_search_service" {
   depends_on = [module.resource_group]
 }
 
+resource "random_pet" "search2" {
+  prefix    = "gmaise"
+  separator = ""
+}
+
+module "azurerm_search_service_2" {
+  source = "./module/azure/search"
+
+  name     = random_pet.search2.id
+  rg_name  = module.resource_group.name
+  location = var.location
+  sku      = "basic"
+
+  depends_on = [module.resource_group]
+}
+
 resource "random_pet" "aims" {
   prefix    = "gmaims"
   separator = ""
