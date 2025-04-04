@@ -20,3 +20,13 @@ variable "identity" {
   type    = string
   default = "SystemAssigned"
 }
+
+variable "authentication_failure_mode" {
+  type    = string
+  default = "http403"
+}
+
+variable "local_authentication_enabled" {
+  type    = bool
+  default = true
+}
