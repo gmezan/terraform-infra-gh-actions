@@ -15,3 +15,8 @@ variable "location" {
   type    = string
   default = "eastus2"
 }
+
+variable "identity" {
+  type    = string
+  default = "SystemAssigned"
+}
