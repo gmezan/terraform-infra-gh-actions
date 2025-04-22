@@ -16,9 +16,11 @@ permissions:
 
 env:
   TF_LOG: INFO
-  BUCKET_TF_STATE: ${{ secrets.BUCKET_TF_STATE}}
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_TF_BUCKET: ${{ secrets.AWS_TF_BUCKET}}
+  AWS_TF_KEY: ${{ secrets.AWS_TF_KEY}}
+  AWS_TF_REGION: ${{ secrets.AWS_TF_REGION }}
 
 jobs:
   terraform-review:
@@ -44,7 +46,7 @@ jobs:
     - name: Terraform Init
       id: init
       #run: terraform init -backend-config="bucket=${{ secrets.TF_STATE_BUCKET_NAME }}" -backend-config="key=${{ secrets.TF_STATE_BUCKET_KEY }}" -backend-config="region=${{ vars.TF_VAR_REGION }}" -backend-config="encrypt=true" -backend-config="dynamodb_table=${{ secrets.TF_STATE_DYNAMODB_TABLE }}" -input=false
-      run: terraform init
+      run: terraform init -backend-config="bucket=$AWS_TF_BUCKET" -backend-config="key=$AWS_TF_KEY" -backend-config="region=$AWS_TF_REGION"
     
     - name: Terraform Validate
       id: validate
@@ -140,7 +142,7 @@ jobs:
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -backend-config="bucket=$AWS_TF_BUCKET" -backend-config="key=$AWS_TF_KEY" -backend-config="region=$AWS_TF_REGION"
 
     # Download saved plan from artifacts  
     - name: Download Terraform Plan
