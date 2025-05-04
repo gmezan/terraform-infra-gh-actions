@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">= 3.7.0"
+      version = "~>4.0"
     }
     random = {
       source  = "hashicorp/random"
@@ -18,4 +18,9 @@ terraform {
     key                  = "terraform.tfstate"
     use_oidc             = true
   }
+}
+
+provider "azurerm" {
+  features {}
+  use_oidc = true
 }

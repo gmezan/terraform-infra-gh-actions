@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
       - main
+      - main-aws
+      - main-azure
     paths:
       - "**.tf*"
       - "**/.tf*"
