@@ -46,5 +46,5 @@ module "aks" {
   workload_identity_enabled = true
   node_count                = 1
 
-  depends_on = [module.rg1]
+  depends_on = [module.resource_group]
 }
