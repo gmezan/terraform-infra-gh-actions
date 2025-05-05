@@ -36,7 +36,7 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   }
 
   network_profile {
-    network_plugin    = "kubenet"
-    load_balancer_sku = "standard"
+    network_plugin    = "azure"
+    load_balancer_sku = "basic"
   }
 }
